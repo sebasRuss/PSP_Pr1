@@ -1,0 +1,79 @@
+Parte 1: Exploración y Gestión de Procesos
+
+¿Qué ventajas y desventajas tiene la ejecución de programas de manera síncrona versus asíncrona en este contexto?
+
+Síncrona: En esta parte, al listar y finalizar procesos, la ejecución síncrona es suficiente. No necesitamos ejecutar múltiples tareas en paralelo, por lo que la simplicidad de la ejecución síncrona es una ventaja.
+Asíncrona: Podría ser útil si quisiéramos monitorear múltiples procesos en tiempo real sin bloquear el programa principal. Sin embargo, para las tareas simples de esta parte, no es estrictamente necesario.
+
+¿Por qué es importante manejar las excepciones al trabajar con procesos?
+
+Los procesos pueden finalizar inesperadamente, los permisos pueden ser denegados o pueden ocurrir errores del sistema. Manejar las excepciones nos permite:
+Evitar que el programa se detenga abruptamente.
+Proporcionar mensajes de error informativos al usuario.
+Implementar mecanismos de recuperación en caso de errores.
+¿Qué tipo de problemas se pueden presentar al comunicarse entre procesos en esta parte? ¿Cómo los has solucionado?
+
+No hay comunicación entre procesos por lo que no ocurre ningun problema.
+
+Parte 2: Comunicación Interprocesos con Pipes
+
+¿Qué ventajas y desventajas tiene la ejecución de programas de manera síncrona versus asíncrona en este contexto?
+
+Síncrona: Al utilizar pipes para enviar y recibir mensajes, la ejecución síncrona es suficiente para garantizar que el proceso padre espere la respuesta del proceso hijo antes de continuar.
+Asíncrona: Podría ser útil si quisiéramos enviar múltiples mensajes al proceso hijo sin esperar una respuesta inmediata para cada uno.
+¿Por qué es importante manejar las excepciones al trabajar con procesos?
+
+Los pipes pueden cerrarse inesperadamente, los procesos pueden terminar abruptamente, o pueden ocurrir errores de E/S. Manejar las excepciones nos permite:
+Detectar errores en la comunicación.
+Liberar recursos (como los pipes) correctamente.
+Implementar mecanismos de reintento en caso de fallos.
+¿Qué tipo de problemas se pueden presentar al comunicarse entre procesos? ¿Cómo los has solucionado?
+
+Problemas:
+Bloqueo: Si un proceso espera una respuesta y el otro no la envía, puede producirse un bloqueo.
+Concurrencia: Si múltiples procesos intentan escribir en el mismo pipe al mismo tiempo, pueden ocurrir errores de corrupción de datos.
+Sincronización: Es importante sincronizar la lectura y escritura en los pipes para evitar perder datos.
+Soluciones:
+Mecanismos de sincronización: Utilizar señales, semáforos o mecanismos de bloqueo para coordinar la comunicación entre procesos.
+Buffers: Utilizar buffers para almacenar datos temporalmente y evitar pérdidas de datos.
+Manejo de errores: Implementar mecanismos para detectar y manejar errores en la comunicación.
+Parte 3: Ejecución de Programas Síncrona y Asíncrona
+
+¿Qué ventajas y desventajas tiene la ejecución de programas de manera síncrona versus asíncrona en este contexto?
+
+Síncrona: Es más sencilla de implementar, pero bloquea la ejecución del programa principal hasta que el proceso externo termine.
+Asíncrona: Permite realizar otras tareas mientras el proceso externo se ejecuta, pero requiere un manejo más cuidadoso de los eventos y callbacks.
+¿Por qué es importante manejar las excepciones al trabajar con procesos?
+
+El proceso externo puede fallar al iniciarse, puede terminar abruptamente o pueden ocurrir errores durante su ejecución. Manejar las excepciones nos permite:
+Detectar errores en la ejecución del proceso externo.
+Proporcionar mensajes de error informativos al usuario.
+Implementar mecanismos de recuperación en caso de fallos.
+¿Qué tipo de problemas se pueden presentar al comunicarse entre procesos en esta parte? ¿Cómo los has solucionado?
+
+En esta parte, la comunicación es indirecta a través de la ejecución del proceso externo. Los problemas principales están relacionados con la gestión del proceso y la captura de su salida.
+Soluciones:
+subprocess.Popen: Utilizar esta función para ejecutar el proceso externo y capturar su salida.
+Comunicación a través de pipes: Si es necesario, se pueden utilizar pipes para establecer una comunicación más directa con el proceso externo.
+Parte 4: Transferencia de Datos y Manipulación del Portapapeles
+
+¿Qué ventajas y desventajas tiene la ejecución de programas de manera síncrona versus asíncrona en este contexto?
+
+Síncrona: Es suficiente para descargar el archivo y copiar el contenido al portapapeles de forma secuencial.
+Asíncrona: Podría ser útil si quisiéramos descargar múltiples archivos en paralelo o monitorear el portapapeles en segundo plano.
+¿Por qué es importante manejar las excepciones al trabajar con procesos?
+
+La conexión al servidor FTP puede fallar, la descarga del archivo puede interrumpirse, o pueden ocurrir errores al copiar el contenido al portapapeles. Manejar las excepciones nos permite:
+Detectar errores en la conexión al servidor FTP y en la transferencia de datos.
+Proporcionar mensajes de error informativos al usuario.
+Implementar mecanismos de reintento en caso de fallos.
+¿Qué tipo de problemas se pueden presentar al comunicarse entre procesos en esta parte? ¿Cómo los has solucionado?
+
+La comunicación se realiza a través de la ejecución de comandos externos (ftp, comandos del sistema operativo) y la interacción con el portapapeles.
+Problemas:
+Errores en los comandos: Los comandos pueden fallar debido a problemas de conexión, permisos o errores en la sintaxis.
+Cambios en el portapapeles: El contenido del portapapeles puede cambiar mientras nuestro programa está en ejecución.
+Soluciones:
+subprocess.Popen: Utilizar esta función para ejecutar los comandos externos y capturar su salida.
+pywin32: Utilizar esta librería para interactuar con el portapapeles de Windows.
+Manejo de errores: Implementar mecanismos para detectar y manejar errores en la ejecución de los comandos y en la interacción con el portapapeles.
